@@ -1,0 +1,32 @@
+﻿{
+  "maxLevel": 3,
+  "levels": [
+    {
+      "maxHealth": 100,
+      "extractionRatePerTick": 10,
+      "cost": {
+        "wood": 100,
+        "stone": 100
+      },
+      "buildTime": 1
+    },
+    {
+      "maxHealth": 200,
+      "extractionRatePerTick": 25,
+      "cost": {
+        "wood": 500,
+        "stone": 500
+      },
+      "buildTime": 10
+    },
+    {
+      "maxHealth": 300,
+      "extractionRatePerTick": 50,
+      "cost": {
+        "wood": 1000,
+        "stone": 1000
+      },
+      "buildTime": 30
+    }
+  ]
+}

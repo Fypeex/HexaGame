@@ -1,9 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.Buildings;
+using Game.Buildings.Extractors;
 
-namespace Game
+namespace Game.Resources
 {
+    public class ResourceConfig
+    {
+        public int wood = 0;
+        public int stone = 0;
+        public int iron = 0;
+        public int gold = 0;
+        public int coal = 0;
+        public int oil = 0;
+        public int water = 0;
+    }
     public class Resource
     {
         

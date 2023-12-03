@@ -1,4 +1,5 @@
 ﻿using Game.Buildings;
+using Game.Buildings.Extractors;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,11 +12,7 @@ namespace Game.Shop
         public void Buy()
         {
             HexTile position = GameManager.Instance.ActiveTile;
-            Debug.Log($"Trying to buy water pump on {position}. " +
-                      $"Already occupied: {position.GetBuilding() != null} " +
-                      $"Money: {GameManager.Instance.Money}" +
-                      $"Type: {position.Type}"
-            );
+            
             if (position == null)
             {
                 return;
@@ -39,8 +36,9 @@ namespace Game.Shop
             GameManager.Instance.Money -= 100;
 
             WaterPump extractor = Instantiate(WaterPumpPrefab, position.transform, false).GetComponent<WaterPump>();
-            Debug.Log($"Bought water pump on {position}  {extractor.Type}");
-
+            
+            extractor.Build();
+            
             position.SetBuilding(extractor, BuildingType.EXTRACTOR);
 
             GameManager.Instance.AddBuilding(extractor, BuildingType.EXTRACTOR);

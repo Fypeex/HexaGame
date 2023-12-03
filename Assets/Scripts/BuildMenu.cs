@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game;
 using Game.Buildings;
+using Game.Buildings.Extractors;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

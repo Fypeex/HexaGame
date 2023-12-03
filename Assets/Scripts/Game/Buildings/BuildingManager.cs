@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Buildings;
+using Game.Buildings.Extractors;
 using UnityEngine;
 
-namespace Game
+namespace Game.Buildings
 {
     public class BuildingManager : MonoBehaviour
     {
@@ -13,12 +13,10 @@ namespace Game
         {
             get
             {
-                if (_instance == null)
-                {
-                    // Create a new GameObject and attach a GameManager to it
-                    _instance = new GameObject("GameManager").AddComponent<BuildingManager>();
-                    DontDestroyOnLoad(_instance.gameObject);
-                }
+                if (_instance != null) return _instance;
+                // Create a new GameObject and attach a GameManager to it
+                _instance = new GameObject("GameManager").AddComponent<BuildingManager>();
+                DontDestroyOnLoad(_instance.gameObject);
 
                 return _instance;
             }
@@ -57,15 +55,14 @@ namespace Game
 
         public void Tick()
         {
-            
         }
-        
+
         public void AddBuilding(Building building, BuildingType type)
         {
             switch (type)
             {
                 case BuildingType.EXTRACTOR:
-                    WaterPumps.Add((WaterPump) building);
+                    WaterPumps.Add((WaterPump)building);
                     break;
                 case BuildingType.FACTORY:
                     break;

@@ -1,19 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.Resources;
 using UnityEngine;
 
 namespace Game.Buildings
 {
-    public class Building : MonoBehaviour
+    public class LevelConfig
     {
+        public int maxHealth;
+        public ResourceConfig cost;
+        public int buildTime;
+    }
 
-        public readonly int MaxLevel;
-        private int _health;
-        private int _maxHealth;
-        private readonly BuildingType _type;
-        public int Level { get; set;  }
+    public class BuildingConfig
+    {
+        public int maxLevel;
+        public List<LevelConfig> levels;
+    }
 
-        public String TypeAsString() {
-            switch (_type)
+    public abstract class Building : MonoBehaviour
+    {
+        public abstract void LoadBuildingConfig();
+        public abstract void LevelUp();
+        public abstract void Build();
+        public abstract void Destroy();
+        
+        
+        public static BuildingConfig Config { get; protected set; }
+        public static readonly BuildingType Type;
+        
+        public int Level { get; protected set; }
+        public int Health { get; protected set; }
+
+        public String TypeToString()
+        {
+            switch (Type)
             {
                 case BuildingType.DEFENSE:
                     return "Defense";
@@ -25,19 +46,13 @@ namespace Game.Buildings
                     return "Empty";
             }
         }
-
-        public Building(int maxLevel, int maxHealth, BuildingType type)
+        public BuildingType GetBuildingType()
         {
-            MaxLevel = maxLevel;
-            _health = maxHealth;
-            Level = 1;
-            _maxHealth = maxHealth;
-            _type = type;
-            Level = 1;
+            return Type;
         }
     }
 
-    
+
     public enum BuildingType
     {
         FACTORY,

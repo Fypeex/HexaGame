@@ -61,7 +61,7 @@ namespace Game
         }
 
         /*
-         * Managable entities:
+         * Manageable entities:
          * - Extractors
          * - Enemies
          * - Resources
