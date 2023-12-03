@@ -7,58 +7,10 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        private enum DevelopmentState
-        {
-            DEVELOPMENT,
-            PRODUCTION
-        }
-
-        private DevelopmentState Development { get; set; } = DevelopmentState.DEVELOPMENT;
-
         private static GameManager _instance;
-
-        public static GameManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    // Create a new GameObject and attach a GameManager to it
-                    _instance = new GameObject("GameManager").AddComponent<GameManager>();
-                    DontDestroyOnLoad(_instance.gameObject);
-                }
-
-                return _instance;
-            }
-        }
-
-        private void Start()
-        {
-            _hexTiles = new List<HexTile>();
-            _gameState = GameState.PLAYING;
-            _buildMenu = FindObjectOfType<BuildMenu>();
-            _buildingInfo = FindObjectOfType<BuildingInfo>();
-
-            _buildMenu.Hide();
-           // _buildingInfo.Hide();
-
-            Debug.Log("GameManager started");
-            InvokeRepeating(nameof(Tick), 2f, 1f);
-            Debug.Log("GameManager tick started");
-        }
-
-        void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
+        private BuildingInfo _buildingInfo;
+        private BuildMenu _buildMenu;
+        private GameState _gameState;
 
         /*
          * Manageable entities:
@@ -78,11 +30,25 @@ namespace Game
 
         //private List<Enemy> _enemies;
         private List<HexTile> _hexTiles;
-        private GameState _gameState;
-        private BuildMenu _buildMenu;
-        private BuildingInfo _buildingInfo;
 
         private int _money;
+
+        private DevelopmentState Development { get; } = DevelopmentState.DEVELOPMENT;
+
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    // Create a new GameObject and attach a GameManager to it
+                    _instance = new GameObject("GameManager").AddComponent<GameManager>();
+                    DontDestroyOnLoad(_instance.gameObject);
+                }
+
+                return _instance;
+            }
+        }
 
         public int Money
         {
@@ -100,6 +66,31 @@ namespace Game
 
 
         public bool IsRunning => _gameState == GameState.PLAYING;
+
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            _hexTiles = new List<HexTile>();
+            _gameState = GameState.PLAYING;
+            _buildMenu = FindObjectOfType<BuildMenu>();
+            _buildingInfo = FindObjectOfType<BuildingInfo>();
+
+            _buildMenu.Hide();
+            // _buildingInfo.Hide();
+            InvokeRepeating(nameof(Tick), 2f, 1f);
+        }
 
         public void AddTile(HexTile tile)
         {
@@ -141,8 +132,17 @@ namespace Game
 
         private void Tick()
         {
+            if(_gameState != GameState.PLAYING)
+                return;
+            
             ResourceManager.Instance.Tick();
             BuildingManager.Instance.Tick();
+        }
+
+        private enum DevelopmentState
+        {
+            DEVELOPMENT,
+            PRODUCTION
         }
     }
 }

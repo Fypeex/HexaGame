@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.Resources;
 using UnityEngine;
 
 namespace Game.Buildings
 {
+    [Serializable]
     public class LevelConfig
     {
         public int maxHealth;
@@ -12,29 +12,30 @@ namespace Game.Buildings
         public int buildTime;
     }
 
+    [Serializable]
     public class BuildingConfig
     {
         public int maxLevel;
-        public List<LevelConfig> levels;
+        public LevelConfig[] levels;
     }
 
     public abstract class Building : MonoBehaviour
     {
+        public static readonly BuildingType BuildingType = BuildingType.EMPTY;
+
+
+        public static BuildingConfig Config { get; protected set; }
+
+        public int Level { get; protected set; }
+        public int Health { get; protected set; }
         public abstract void LoadBuildingConfig();
         public abstract void LevelUp();
         public abstract void Build();
         public abstract void Destroy();
-        
-        
-        public static BuildingConfig Config { get; protected set; }
-        public static readonly BuildingType Type;
-        
-        public int Level { get; protected set; }
-        public int Health { get; protected set; }
 
-        public String TypeToString()
+        public string BuildingTypeToString()
         {
-            switch (Type)
+            switch (BuildingType)
             {
                 case BuildingType.DEFENSE:
                     return "Defense";
@@ -46,9 +47,10 @@ namespace Game.Buildings
                     return "Empty";
             }
         }
+
         public BuildingType GetBuildingType()
         {
-            return Type;
+            return BuildingType;
         }
     }
 

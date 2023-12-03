@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Game.Buildings.Extractors
 {
-    public class WaterPump : Extractor
+    public class SawMill : Extractor
     {
-        public static string ConfigPath = "/Resources/Configs/Buildings/Extractors/WaterPumpConfig.json";
+        public static string ConfigPath = "/Resources/Configs/Buildings/Extractors/SawMillConfig.json";
         public new static readonly BuildingType BuildingType = BuildingType.EXTRACTOR;
-        public new static readonly ExtractorType ExtractorType = ExtractorType.WATER_PUMP;
-
+        public new static readonly ExtractorType ExtractorType = ExtractorType.SAW_MILL;
+        
         public new static ExtractorConfig Config { get; set; }
 
         private void Awake()

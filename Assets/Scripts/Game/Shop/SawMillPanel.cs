@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Game.Shop
 {
-    public class WaterPumpPanel : MonoBehaviour
+    public class SawMillPanel : MonoBehaviour
     {
-        [field: SerializeField] public GameObject WaterPumpPrefab;
+        [field: SerializeField] public GameObject SawMillPrefab;
 
         public void Buy()
         {
@@ -16,13 +16,13 @@ namespace Game.Shop
 
             if (position.GetBuilding() != null) return;
 
-            if (position.Type != Resourcetype.WATER) return;
+            if (position.Type != Resourcetype.WOOD) return;
 
             if (GameManager.Instance.Money < 100) return;
 
             GameManager.Instance.Money -= 100;
 
-            var extractor = Instantiate(WaterPumpPrefab, position.transform, false).GetComponent<WaterPump>();
+            var extractor = Instantiate(SawMillPrefab, position.transform, false).GetComponent<SawMill>();
 
             extractor.Build();
 
@@ -40,7 +40,7 @@ namespace Game.Shop
 
             if (position.GetBuilding() == null) return;
 
-            if (position.Type != Resourcetype.WATER) return;
+            if (position.Type != Resourcetype.WOOD) return;
             
             if (GameManager.Instance.Money < 100) return;
             

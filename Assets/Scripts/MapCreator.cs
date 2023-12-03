@@ -25,7 +25,6 @@ public class MapCreator : MonoBehaviour
                 if (IsInRadius(x, y))
                     count++;
 
-                Debug.Log($"Current count: {count}, current list count: {_startTiles.Count}");
                 if (_startTiles.Count < count) _startTiles.Add(Random.Range(0, 2));
             }
         }
@@ -43,7 +42,6 @@ public class MapCreator : MonoBehaviour
         for (int i = 0; i <= 10; i++)
         {
             int count = _startTiles.FindAll((k) => k == i).Count;
-            Debug.Log($"Count of {i}: {count}");
         }
 
         for (int x = -MapRadius; x <= MapRadius; x++)
@@ -56,15 +54,7 @@ public class MapCreator : MonoBehaviour
                     HexTile tile = Instantiate(HexPrefab, center, Quaternion.identity, transform)
                         .GetComponent<HexTile>();
 
-                    Debug.Log($"Remaining tiles: {_startTiles.Count}");
-
                     int rand = Random.Range(0, _startTiles.Count);
-
-                    Debug.Log($"Rand: {rand} " +
-                              $"List: {_startTiles} " +
-                              $"List index: {_startTiles[rand]}" +
-                              $"Type: {(Resourcetype)_startTiles[rand]}"
-                    );
 
                     tile.SetType((Resourcetype)_startTiles[rand]);
                     _startTiles.RemoveAt(rand);

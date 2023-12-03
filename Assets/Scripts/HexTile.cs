@@ -67,6 +67,8 @@ public class HexTile : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _animator.ResetTrigger(PlayGrowShrink);
+        _animator.ResetTrigger(StopGrowShrink);
     }
 
     public void OnHexClicked()
@@ -108,10 +110,10 @@ public class HexTile : MonoBehaviour
     }
     
     public Building GetBuilding() => _building;
-    public void SetBuilding(Building building, BuildingType type)
+    public void SetBuilding(Building building, BuildingType group)
     {
         _building = building;
-        _buildingType = type;
+        _buildingType = group;
     }
     
     public BuildingType GetBuildingType() => _buildingType;

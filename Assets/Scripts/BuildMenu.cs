@@ -18,6 +18,7 @@ public class BuildMenu : MonoBehaviour
     [field: SerializeField] public TextMeshProUGUI InfoText;
     [field: SerializeField] public GameObject Shop;
     [field: SerializeField] public GameObject WaterPumpPanel;
+    [field: SerializeField] public GameObject SawMillPanel;
 
     private GameObject _shop;
     private List<GameObject> _content;
@@ -35,12 +36,8 @@ public class BuildMenu : MonoBehaviour
             _shop = panel;
 
 
-            if (tileInfo.IsOccupied)
-            {
-                //Extractor is built
-            }
-            else
-            {
+           
+            
                 //Extractor is not built
                 GameObject waterPumpPanel = Instantiate(WaterPumpPanel,
                     panel.GetComponentInChildren<ScrollRect>().content.transform, false);
@@ -52,6 +49,29 @@ public class BuildMenu : MonoBehaviour
                 {
                     _content.Add(waterPumpPanel);
                 }
+            
+        }
+        
+        else if (tile.Type == Resourcetype.WOOD)
+        {
+            GameObject panel = Instantiate(Shop, transform, false);
+            panel.transform.localScale = Vector3.one;
+            panel.transform.localPosition = Vector3.zero;
+            _shop = panel;
+
+
+           
+            
+            //Extractor is not built
+            GameObject sawMillPanel = Instantiate(SawMillPanel,
+                panel.GetComponentInChildren<ScrollRect>().content.transform, false);
+            if (_content == null)
+            {
+                _content = new List<GameObject> {sawMillPanel};
+            }
+            else
+            {
+                _content.Add(sawMillPanel);
             }
         }
 

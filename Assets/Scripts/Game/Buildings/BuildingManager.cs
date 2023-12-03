@@ -22,7 +22,10 @@ namespace Game.Buildings
             }
         }
 
-        void Awake()
+        public List<WaterPump> WaterPumps { get; private set; }
+        public List<SawMill> SawMills { get; private set; }
+        
+        private void Awake()
         {
             if (_instance == null)
             {
@@ -38,21 +41,25 @@ namespace Game.Buildings
         private void Start()
         {
             WaterPumps = new List<WaterPump>();
+            SawMills = new List<SawMill>();
         }
-
-        public List<WaterPump> WaterPumps { get; private set; }
 
         public int WaterExtractionPerTick()
         {
-            int amount = 0;
-            foreach (var waterPump in WaterPumps)
-            {
-                amount += waterPump.Extract();
-            }
+            var amount = 0;
+            foreach (var waterPump in WaterPumps) amount += waterPump.Extract();
 
             return amount;
         }
 
+        public int WoodExtractionPerTick()
+        {
+            var amount = 0;
+            foreach (var sawMill in SawMills) amount += sawMill.Extract();
+
+            return amount;
+        }
+        
         public void Tick()
         {
         }
@@ -62,7 +69,15 @@ namespace Game.Buildings
             switch (type)
             {
                 case BuildingType.EXTRACTOR:
-                    WaterPumps.Add((WaterPump)building);
+                    switch (((Extractor) building).GetExtractorType())
+                    {
+                        case ExtractorType.WATER_PUMP:
+                            WaterPumps.Add((WaterPump) building);
+                            break;
+                        case ExtractorType.SAW_MILL:
+                            SawMills.Add((SawMill) building);
+                            break;
+                    }
                     break;
                 case BuildingType.FACTORY:
                     break;
